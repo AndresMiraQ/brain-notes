@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { TaskCreator } from "./components/TaskCreator";
 import { TaskTable } from "./components/TaskTable";
+import { ControlVisibility } from "./components/ControlVisibility";
 
 const App = () => {
   const [tasksItems, setTasksItems] = useState([]);
@@ -28,6 +29,11 @@ const App = () => {
     }
   }, []);
 
+  const cleanTasks = () => {
+    setTasksItems(tasksItems.filter((task) => !task.done));
+    setShowCompleted(false);
+  };
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasksItems));
   }, [tasksItems]);
@@ -36,14 +42,11 @@ const App = () => {
     <div className="App">
       <TaskCreator createNewTask={createNewTask} />
       <TaskTable tasks={tasksItems} toggleTask={toggleTask} />
-
-      <div>
-        <input
-          type="checkbox"
-          onChange={(e) => setShowCompleted(!showCompleted)}
-        />{" "}
-        <label>Show Tasks Done</label>
-      </div>
+      <ControlVisibility
+        isChecked={showCompleted}
+        setShowCompleted={(checked) => setShowCompleted(checked)}
+        cleanTasks={cleanTasks}
+      />
 
       {showCompleted && (
         <TaskTable
