@@ -21,7 +21,7 @@ export const TaskCreator = ({ createNewTask }) => {
       />
       </div>
       <div className="col-3">
-        <button className="btn btn-primary btn-sm">Safe task</button>
+        <button className="btn btn-primary btn-sm">Save task</button>
       </div>
     </form>
   );
